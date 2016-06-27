@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Description     : Simple Python implementation of the Apriori Algorithm
 
@@ -46,9 +48,12 @@ def joinSet(itemSet, length):
 
 
 def getItemSetTransactionList(data_iterator):
+    # index = 0
     transactionList = list()
     itemSet = set()
     for record in data_iterator:
+        # print index
+        # index += 1
         transaction = frozenset(record)
         transactionList.append(transaction)
         for item in transaction:
@@ -116,11 +121,24 @@ def runApriori(data_iter, minSupport, minConfidence):
 def printResults(items, rules):
     """prints the generated itemsets sorted by support and the confidence rules sorted by confidence"""
     for item, support in sorted(items, key=lambda (item, support): support):
-        print "item: %s , %.3f" % (str(item), support)
+        item_arr = []
+        for word in item:
+            item_arr.append(word)
+        item_string = ','.join(item_arr)
+        print "item: %s , %.3f" % (item_string, support)
+
     print "\n------------------------ RULES:"
     for rule, confidence in sorted(rules, key=lambda (rule, confidence): confidence):
         pre, post = rule
-        print "Rule: %s ==> %s , %.3f" % (str(pre), str(post), confidence)
+        pre_arr = []
+        post_arr = []
+        for pre_word in pre:
+            pre_arr.append(pre_word)
+        pre_string = ','.join(pre_arr)
+        for post_word in post:
+            post_arr.append(post_word)
+        post_string = ','.join(post_arr)
+        print "Rule: %s ==> %s , %.3f" % (pre_string, post_string, confidence)
 
 
 def dataFromFile(fname):
